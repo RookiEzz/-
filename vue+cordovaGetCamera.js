@@ -85,7 +85,7 @@ subHandle: function() {
        
         options.params = params;
         var ft = new FileTransfer();
-        ft.upload(PathToResultZip, encodeURI('http://192.168.0.211:8380/xxx'), win, fail, options);
+        ft.upload(PathToResultZip, encodeURI('http://xxx/xxx'), win, fail, options);
 
         function win(){
           console.log('nice')
