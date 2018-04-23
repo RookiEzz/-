@@ -70,3 +70,27 @@ instance.interceptors.response.use(function (response) {
 
 
 export default instance
+
+//在自定义api接口中引入并使用
+import $http from '@/plugins/$http'
+
+export function phoneVerifyCode (data) {
+  return $http.post(`/users/phone`, data).then(res=>{
+    //Promise.resolve(res.data);
+    return res.data
+  })
+}
+
+//组件中引入api的自定义接口，根据code的值做出不同响应(报错响应信息存在于拦截器中了，但可能还会有其他的操作，比如出错时，获取验证码的倒计时)
+
+getCode() {
+  let data = { phone: this.phone };
+  this._countDown();
+  phoneVerifyCode(data).then(data => {
+    if (data.code == 0) {
+      this.$message.success(this.$t("personcenter.send"));
+    } else {
+      this._countOver();//出错时，获取验证码倒计时置为0，可以再次获取验证码
+    }
+  });
+},
